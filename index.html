@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shodan Dorks Framework</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            border-radius: 10px 10px 0 0;
+        }
+        .dorks {
+            padding: 20px;
+        }
+        .dork {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        .dork-code {
+            font-family: monospace;
+            background-color: #f9f9f9;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .category {
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .target-input {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+    <h1>Shodan Dorks Framework</h1>
+    <p style="color: #fff;">Hint: Please log in to Shodan to use these dorks. Some dorks may not work without a Shodan account.</p>
+    <p style="color: #fff;">Hint: You can search using IP addresses (e.g. 192.168.1.1), IP ranges (e.g. 192.168.1.1/24), domains (e.g. tesla.com), or wildcards (e.g. *.tesla.com). For example, to search for Tesla's assets, you can use "tesla.com" or "*.tesla.com".</p>
+</div>
+        <div class="dorks">
+            <input type="text" id="target" class="target-input" placeholder="Enter target domain or IP">
+            <h2 class="category">General Dorks</h2>
+            <div class="dork">
+                <span>1. Organization Search:</span>
+                <span class="dork-code">org:"<span id="target-domain">target.com</span>"</span>
+                <button onclick="openDork('org:%22{target}%22')">Open in Shodan</button>
+            </div>
+            <div class="dork">
+                <span>2. HTTP Status Code Search:</span>
+                <span class="dork-code">http.status:"<status_code>"</span>
+                <button onclick="openDork('http.status:%22{status_code}%22')">Open in Shodan</button>
+            </div>
+            <div class="dork">
+                <span>3. Product Search:</span>
+                <span class="dork-code">product:"<Product_Name>"</span>
+                <button onclick="openDork('product:%22{product_name}%22')">Open in Shodan</button>
+            </div>
+            <h2 class="category" style="color: #00698f;">Port and Service Dorks</h2>
+            <div class="dork">
+                <span>4. Port and Service Message Search:</span>
+                <span class="dork-code">port:<Port_Number> "<Service_Message>"</span>
+                <button onclick="openDork('port:{port_number}%20%22{service_message}%22')">Open in Shodan</button>
+            </div>
+            <div class="dork">
+                <span>5. Port and Service Name Search:</span>
+                <span class="dork-code">port:<Port_Number> "<Service_Name>"</span>
+                <button onclick="openDork('port:{port_number}%20%22{service_name}%22')">Open in Shodan</button>
+            </div>
+            <h2 class="category" style="color: #8e44ad;">HTTP and Component Dorks</h2>
+            <div class="dork">
+    <span>6. HTTP Component Search:</span>
+    <span class="dork-code">http.component:"{target}"</span>
+    <button onclick="openDork('http.component:%22{target}%22')">Open in Shodan</button>
+</div>
+                        <div class="dork">
+                <span>7. HTTP Component Category Search:</span>
+                <span class="dork-code">http.component_category:"<Component_Category>"</span>
+                <button onclick="openDork('http.component_category:%22{component_category}%22')">Open in Shodan</button>
+            </div>
+            <h2 class="category" style="color: #e74c3c;">Security and Vulnerability Dorks</h2>
+            <div class="dork">
+                <span>8. WAF Search:</span>
+                <span class="dork-code">http.waf:"<firewall_name>"</span>
+                <button onclick="openDork('http.waf:%22{firewall_name}%22')">Open in Shodan</button>
+            </div>
+            <div class="dork">
+                <span>9. Vulnerability Search:</span>
+                <span class="dork-code">vuln:"CVE-2023-XXXXX"</span>
+                <button onclick="openDork('vuln:%22CVE-2023-XXXXX%22')">Open in Shodan</button>
+            </div>
+            <h2 class="category" style="color: #2ecc71;">Location and Network Dorks</h2>
+            <div class="dork">
+                <span>10. Net Range Search:</span>
+                <span class="dork-code">net:"<Net_Range>"</span>
+                <button onclick="openDork('net:%22{net_range}%22')">Open in Shodan</button>
+            </div>
+            <div class="dork">
+                <span>11. ASN Search:</span>
+                <span class="dork-code">asn:"<ASnumber>"</span>
+                <button onclick="openDork('asn:%22{asn}%22')">Open in Shodan</button>
+            </div>
+            <div class="dork">
+                <span>12. Hostname Search:</span>
+                <span class="dork-code">hostname:"<hosthame>"</span>
+                <button onclick="openDork('hostname:%22{hostname}%22')">Open in Shodan</button>
+            </div>
+            <div class="dork">
+                <span>13. IP Address Search:</span>
+                <span class="dork-code">ip:"<IP_Address>"</span>
+                <button onclick="openDork('ip:%22{ip_address}%22')">Open in Shodan</button>
+            </div>
+            <h2 class="category" style="color: #9b59b6;">Cookie and Session Dorks</h2>
+            <div class="dork">
+                <span>14. PHPMyAdmin Cookie Search:</span>
+                <span class="dork-code">"Set-Cookie: phpMyAdmin"</span>
+                <button onclick="openDork('Set-Cookie:%20phpMyAdmin')">Open in Shodan</button>
+            </div>
+            <div class="dork">
+                <span>15. Lang Cookie Search:</span>
+                <span class="dork-code">"Set-Cookie: lang="</span>
+                <button onclick="openDork('Set-Cookie:%20lang=')">Open in Shodan</button>
+            </div>
+            <div class="dork">
+                <span>16. PHPSESSID Cookie Search:</span>
+                <span class="dork-code">"Set-Cookie: PHPSESSID"</span>
+                <button onclick="openDork('Set-Cookie:%20PHPSESSID')">Open in Shodan</button>
+            </div>
+            <div class="dork">
+                <span>17. WebVPN Cookie Search:</span>
+                <span class="dork-code">"Set-Cookie: webvpn"</span>
+                <button onclick="openDork('Set-Cookie:%20webvpn')">Open in Shodan</button>
+            </div>
+            <div class="dork">
+                <span>18. WebVPN Login Cookie Search:</span>
+                <span class="dork-code">"Set-Cookie: webvpnlogin=1"</span>
+                <button onclick="openDork('Set-Cookie:%20webvpnlogin=1')">Open in Shodan</button>
+            </div>
+            <div class="dork">
+    <span>19. WebVPN Lang Cookie Search:</span>
+    <span class="dork-code">"Set-Cookie: webvpnLang={target}"</span>
+    <button onclick="openDork('Set-Cookie:%20webvpnLang={target}')">Open in Shodan</button>
+</div>
+                        <div class="dork">
+                <span>20. Mongo Express Cookie Search:</span>
+                <span class="dork-code">"Set-Cookie: mongo-express="</span>
+                <button onclick="openDork('Set-Cookie:%20mongo-express=')">Open in Shodan</button>
+            </div>
+            <div class="dork">
+                <span>21. User ID Cookie Search:</span>
+                <span class="dork-code">"Set-Cookie: user_id="</span>
+                <button onclick="openDork('Set-Cookie:%20user_id=')">Open in Shodan</button>
+            </div>
+            <div class="dork">
+                <span>22. PHPMyAdmin Cookie Search:</span>
+                <span class="dork-code">"Set-Cookie: phpMyAdmin="</span>
+                <button onclick="openDork('Set-Cookie:%20phpMyAdmin=')">Open in Shodan</button>
+            </div>
+            <div class="dork">
+                <span>23. GitLab Session Cookie Search:</span>
+                <span class="dork-code">"Set-Cookie: _gitlab_session"</span>
+                <button onclick="openDork('Set-Cookie:%20_gitlab_session')">Open in Shodan</button>
+            </div>
+            <h2 class="category" style="color: #1abc9c;">Elasticsearch and Kibana Dorks</h2>
+            <div class="dork">
+                <span>24. Elasticsearch Search:</span>
+                <span class="dork-code">"X-elastic-product: Elasticsearch"</span>
+                <button onclick="openDork('X-elastic-product:%20Elasticsearch')">Open in Shodan</button>
+            </div>
+            <div class="dork">
+                <span>25. Kibana Search:</span>
+                <span class="dork-code">"kbn-name: kibana"</span>
+                <button onclick="openDork('kbn-name:%20kibana')">Open in Shodan</button>
+            </div>
+            <h2 class="category" style="color: #f1c40f;">Login and Index Dorks</h2>
+            <div class="dork">
+                <span>26. Login Page Search:</span>
+                <span class="dork-code">http.title:"Login"</span>
+                <button onclick="openDork('http.title:%22Login%22')">Open in Shodan</button>
+            </div>
+            <div class="dork">
+                <span>27. Index of / Search:</span>
+                <span class="dork-code">title:"index of /"</span>
+                <button onclick="openDork('title:%22index%20of%20/%22')">Open in Shodan</button>
+            </div>
+            <h2 class="category" style="color: #2c3e50;">City and Port Dorks</h2>
+            <div class="dork">
+                <span>28. City Search:</span>
+                <span class="dork-code">city:"New York" port:80</span>
+                <button onclick="openDork('city:%22New%20York%22%20port:80')">Open in Shodan</button>
+            </div>
+            <div class="dork">
+                <span>29. Port Search:</span>
+                <span class="dork-code">port:21, port:22, port:3306</span>
+                <button onclick="openDork('port:21,%20port:22,%20port:3306')">Open in Shodan</button>
+            </div>
+            <h2 class="category" style="color: #8e44ad;">Product and Version Dorks</h2>
+            <div class="dork">
+                <span>30. Product Search:</span>
+                <span class="dork-code">product:"Apache"</span>
+                <button onclick="openDork('product:%22Apache%22')">Open in Shodan</button>
+            </div>
+            <div class="dork">
+                <span>31. Version Search:</span>
+                <span class="dork-code">version:"1.0.0"</span>
+                <button onclick="openDork('version:%221.0.0%22')">Open in Shodan</button>
+            </div>
+            <h2 class="category" style="color: #e74c3c;">SSL and Certificate Dorks</h2>
+            <div class="dork">
+    <span>32. SSL Search:</span>
+    <span class="dork-code">ssl:{target}</span>
+    <button onclick="openDork('ssl:{target}')">Open in Shodan</button>
+</div>
+            <div class="dork">
+                <span>33. Certificate Search:</span>
+                <span class="dork-code">ssl.cert:"example.com"</span>
+                <button onclick="openDork('ssl.cert:%22example.com%22')">Open in Shodan</button>
+            </div>
+            <h2 class="category" style="color: #2ecc71;">Miscellaneous Dorks</h2>
+            <div class="dork">
+    <span>34. X-Drupal-Cache Search:</span>
+    <span class="dork-code">"x-drupal-cache" {target}</span>
+    <button onclick="openDork('x-drupal-cache%20{target}')">Open in Shodan</button>
+</div>
+            <div class="dork">
+    <span>35. Access-Control-Allow-Origin Search:</span>
+    <span class="dork-code">"access-control-allow-origin" {target}</span>
+    <button onclick="openDork('access-control-allow-origin%20{target}')">Open in Shodan</button>
+</div>
+            <div class="dork">
+    <span>36. WWW-Authenticate Search:</span>
+    <span class="dork-code">"WWW-Authenticate" {target}</span>
+    <button onclick="openDork('WWW-Authenticate%20{target}')">Open in Shodan</button>
+</div>
+            <div class="dork">
+    <span>37. X-Magento-Cache-Debug Search:</span>
+    <span class="dork-code">"X-Magento-Cache-Debug" {target}</span>
+    <button onclick="openDork('X-Magento-Cache-Debug%20{target}')">Open in Shodan</button>
+</div>
+            <div class="dork">
+                <span>38. Kibana Search:</span>
+                <span class="dork-code">"kbn-name: kibana"</span>
+                <button onclick="openDork('kbn-name:%20kibana')">Open in Shodan</button>
+            </div>
+            <div class="dork">
+                <span>39. Login Page Search:</span>
+                <span class="dork-code">http.title:"Login"</span>
+                <button onclick="openDork('http.title:%22Login%22')">Open in Shodan</button>
+            </div>
+            <div class="dork">
+                <span>40. SSL Certificate Search:</span>
+                <span class="dork-code">ssl.cert.subject.CN:"example.com"</span>
+                <button onclick="openDork('ssl.cert.subject.CN:%22example.com%22')">Open in Shodan</button>
+            </div>
+            <div class="dork">
+                <span>41. Organization Search:</span>
+                <span class="dork-code">org:"{target}"</span>
+                <button onclick="openDork('org:%22{target}%22')">Open in Shodan</button>
+            </div>
+            <div class="dork">
+                <span>42. Port Search:</span>
+                <span class="dork-code">port:21, port:22, port:3306</span>
+                <button onclick="openDork('port:21,%20port:22,%20port:3306')">Open in Shodan</button>
+            </div>
+            <div class="dork">
+                <span>43. Product Search:</span>
+                <span class="dork-code">product:"Apache"</span>
+                <button onclick="openDork('product:%22Apache%22')">Open in Shodan</button>
+            </div>
+            <div class="dork">
+                <span>44. Vulnerability Search:</span>
+                <span class="dork-code">vuln:"CVE-2023-XXXXX"</span>
+                <button onclick="openDork('vuln:%22CVE-2023-XXXXX%22')">Open in Shodan</button>
+            </div>
+            <div class="dork">
+                <span>45. HTML Search:</span>
+                <span class="dork-code">html:"phpMyAdmin"</span>
+                <button onclick="openDork('html:%22phpMyAdmin%22')">Open in Shodan</button>
+            </div>
+            <div class="dork">
+                                <span>46. HTTP Favicon Hash Search:</span>
+                <span class="dork-code">http.favicon.hash:12345678</span>
+                <button onclick="openDork('http.favicon.hash:12345678')">Open in Shodan</button>
+            </div>
+            <div class="dork">
+                <span>47. Index of / Search:</span>
+                <span class="dork-code">title:"index of /"</span>
+                <button onclick="openDork('title:%22index%20of%20/%22')">Open in Shodan</button>
+            </div>
+            <div class="dork">
+                <span>48. City Search:</span>
+                <span class="dork-code">city:"New York" port:80</span>
+                <button onclick="openDork('city:%22New%20York%22%20port:80')">Open in Shodan</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        function openDork(dork) {
+            var target = document.getElementById("target").value;
+            if (target !== "") {
+                dork = dork.replace("{target}", target);
+                window.open("https://www.shodan.io/search?query=" + dork, "_blank");
+            } else {
+                alert("Please enter a target domain or IP");
+            }
+        }
+    </script>
+</body>
+</html>
+
+
+
